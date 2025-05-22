@@ -39,7 +39,7 @@ int main(){
     calculateLable.setString("Calculate");
     calculateLable.setFillColor(Color::Black);
     calculateLable.setOutlineColor(Color::White);
-    calculateLable.setPosition(Vector2f(180, 210));
+    calculateLable.setPosition(Vector2f(185, 210));
 
     Text outputLable;
     outputLable.setFont(arial);
@@ -89,6 +89,17 @@ int main(){
     goalBox.setSize(Vector2f(430, 40));
     goalBox.setPosition(Vector2f(160, 150));
 
+    RectangleShape clearButton;
+    clearButton.setFillColor(Color(215, 232, 186));
+    clearButton.setSize(Vector2f(300, 50));
+    clearButton.setPosition(Vector2f(100, 260));
+
+    Text clearText;
+    clearText.setFont(arial);
+    clearText.setFillColor(Color::Black);
+    clearText.setString("Clear");
+    clearText.setPosition(Vector2f(215, 270));
+
 
     double weight;
     double goal;
@@ -108,6 +119,8 @@ int main(){
         window.draw(goalBox);
         window.draw(wantedField);
         window.draw(goalField);
+        window.draw(clearButton);
+        window.draw(clearText);
 
         if(displayOutput){
             window.draw(outputLable);
@@ -122,6 +135,17 @@ int main(){
 
             if(event.type == Event::MouseButtonPressed){
                 if(event.mouseButton.button == Mouse::Left){
+
+                    if(Mouse::getPosition(window).x >= clearButton.getPosition().x &&
+                    Mouse::getPosition(window).x <= clearButton.getPosition().x + clearButton.getSize().x &&
+                    Mouse::getPosition(window).y >= clearButton.getPosition().y &&
+                    Mouse::getPosition(window).y <= clearButton.getPosition().y + clearButton.getSize().y){
+                        displayOutput = false;
+                        finalField.setString("");
+                        wantedField.setString("");
+                        goalField.setString("");
+                    }
+
                     if(Mouse::getPosition(window).x >= calculateButton.getPosition().x &&
                     Mouse::getPosition(window).x <= calculateButton.getPosition().x + calculateButton.getSize().x &&
                     Mouse::getPosition(window).y >= calculateButton.getPosition().y &&
@@ -182,6 +206,7 @@ int main(){
                     Mouse::getPosition(window).y >= finalBox.getPosition().y &&
                     Mouse::getPosition(window).y <= finalBox.getPosition().y + finalBox.getSize().y){
                         writeFinal = true;
+                        finalField.setString("");
                     }
                     else{
                         writeFinal = false;
@@ -193,6 +218,7 @@ int main(){
                     Mouse::getPosition(window).y >= wantedBox.getPosition().y &&
                     Mouse::getPosition(window).y <= wantedBox.getPosition().y + wantedBox.getSize().y){
                         writeWanted = true;
+                        wantedField.setString("");
                     }
                     else{
                         writeWanted = false;
@@ -204,6 +230,7 @@ int main(){
                     Mouse::getPosition(window).y >= goalBox.getPosition().y &&
                     Mouse::getPosition(window).y <= goalBox.getPosition().y + goalBox.getSize().y){
                         writeGoal = true;
+                        goalField.setString("");
                     }
                     else{
                         writeGoal = false;
@@ -240,7 +267,7 @@ int main(){
             }
 
         }
-}
+    }
     
     return 0;
 }
